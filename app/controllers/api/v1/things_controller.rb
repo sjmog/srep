@@ -2,8 +2,7 @@ module Api
   module V1
     class ThingsController < ApplicationController
       def create
-        thing = Thing.new(thing_params)
-        thing.save
+        thing = Thing.create(thing_params)
 
         render json: thing, status: :ok
       end
@@ -11,7 +10,7 @@ module Api
       private
 
       def thing_params
-        params.require(:thing).permit(:text)
+        params.require(:thing).permit(:text, :webhook_url)
       end
     end
   end

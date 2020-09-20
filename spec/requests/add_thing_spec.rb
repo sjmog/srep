@@ -1,7 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe "adding a thing to the spaced repetition queue", :type => :request do
-  before { post('/api/v1/things', params: { thing: { text: "Hello, World!" } }) }
+  before do
+    thing = FactoryBot.build(:thing)
+
+    post '/api/v1/things', params: { thing: thing.as_json(except: [:id, :created_at, :updated_at]) }
+  end
 
   it 'adds the thing to the srep queue' do
     expect(Thing.last.text).to eq("Hello, World!")
